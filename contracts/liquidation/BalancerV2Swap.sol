@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: BUSL-1.1
+// SPDX-License-Identifier: MIT
 pragma solidity 0.7.6;
 pragma abicoder v2;
 
@@ -21,7 +21,7 @@ contract BalancerV2Swap is ISwapper {
     IVault public immutable vault;
 
     constructor (address _balancerVault) {
-        require(_balancerVault != address(0), "invalid vault");
+        if (_balancerVault == address(0)) revert("VaultIsZero");
 
         vault = IVault(_balancerVault);
     }
@@ -60,7 +60,7 @@ contract BalancerV2Swap is ISwapper {
 
         // solhint-disable-next-line avoid-low-level-calls
         (bool success, bytes memory data) = _oracle.staticcall(callData);
-        require(success, "pool for asset not set");
+        if (!success) revert("PoolNotSet");
 
         BalancerPool memory pool = abi.decode(data, (BalancerPool));
         return pool.poolId;
@@ -80,7 +80,8 @@ contract BalancerV2Swap is ISwapper {
             address(this), false, payable(address(this)), false
         );
 
-        return vault.swap(singleSwap, funds, 1, block.timestamp);
+        uint256 limit = 1;
+        return vault.swap(singleSwap, funds, limit, block.timestamp);
     }
 
     function _swapAmountOut(

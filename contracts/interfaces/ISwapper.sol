@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: BUSL-1.1
-pragma solidity >=0.7.0 <0.9.0;
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.7.6 <0.9.0;
 
 interface ISwapper {
     /// @dev swaps `_amountIn` of `_tokenIn` for `_tokenOut`. It might require approvals.

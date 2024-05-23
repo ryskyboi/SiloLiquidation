@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: BUSL-1.1
-pragma solidity >=0.6.0 <0.9.0;
+pragma solidity 0.8.13;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
@@ -7,8 +7,6 @@ import "../interfaces/IPriceProvidersRepository.sol";
 import "../interfaces/ISilo.sol";
 import "../interfaces/IInterestRateModel.sol";
 import "../interfaces/ISiloRepository.sol";
-import "../Error.sol";
-
 import "./EasyMath.sol";
 
 library Solvency {
@@ -20,6 +18,9 @@ library Solvency {
     /// LiquidationThreshold - Liquidation Threshold represents the threshold at which all user's borrow positions
     /// in a Silo will be considered under collateralized and subject to liquidation
     enum TypeofLTV { MaximumLTV, LiquidationThreshold }
+
+    error DifferentArrayLength();
+    error UnsupportedLTVType();
 
     struct SolvencyParams {
         /// @param siloRepository SiloRepository address
@@ -34,7 +35,7 @@ library Solvency {
         address user;
     }
 
-    /// @dev is value that used for integer calculations and decimal points for utilisation ratios, LTV, protocol fees
+    /// @dev is value that used for integer calculations and decimal points for utilization ratios, LTV, protocol fees
     uint256 internal constant _PRECISION_DECIMALS = 1e18;
     uint256 internal constant _INFINITY = type(uint256).max;
 
@@ -44,7 +45,8 @@ library Solvency {
     /// @param _params `Solvency.SolvencyParams` struct with needed params for calculation
     /// @param _secondLtvType type of LTV to be returned as second value
     /// @return currentUserLTV Loan-to-Value ratio represents current user's proportion of debt to collateral
-    /// @return secondLTV second type of LTV, could be TypeofLTV.MaximumLTV or TypeofLTV.LiquidationThreshold
+    /// @return secondLTV second type of LTV which depends on _secondLtvType, zero is returned if the value of the loan
+    /// or the collateral are zero
     function calculateLTVs(SolvencyParams memory _params, TypeofLTV _secondLtvType)
         internal
         view
@@ -92,7 +94,7 @@ library Solvency {
 
     /// @notice Calculates chosen LTV limit
     /// @dev This function should be used by external actors like SiloLens and UI/subgraph. `calculateLTVs` is
-    /// optimized for protocol use and may not return second LVT calcualtion when they are not needed.
+    /// optimized for protocol use and may not return second LVT calculation when they are not needed.
     /// @param _params `Solvency.SolvencyParams` struct with needed params for calculation
     /// @param _ltvType acceptable values are only TypeofLTV.MaximumLTV or TypeofLTV.LiquidationThreshold
     /// @return limit theoretical LTV limit of `_ltvType`
@@ -122,7 +124,7 @@ library Solvency {
         limit = borrowAvailableTotalValue * _PRECISION_DECIMALS / collateralTotalValue;
     }
 
-    /// @notice Returns worth (in ETH) of each collateral deposit of a user
+    /// @notice Returns worth (in quote token) of each collateral deposit of a user
     /// @param _priceProvidersRepository address of IPriceProvidersRepository where prices are read
     /// @param _params `Solvency.SolvencyParams` struct with needed params for calculation
     /// @return collateralValues worth of each collateral deposit of a user as an array
@@ -135,7 +137,7 @@ library Solvency {
         collateralValues = convertAmountsToValues(_priceProvidersRepository, _params.assets, collateralAmounts);
     }
 
-    /// @notice Convert assets amounts to values in ETH (amount * price)
+    /// @notice Convert assets amounts to values in quote token (amount * price)
     /// @param _priceProviderRepo address of IPriceProvidersRepository where prices are read
     /// @param _assets array with assets for which prices are read
     /// @param _amounts array of amounts
@@ -145,7 +147,7 @@ library Solvency {
         address[] memory _assets,
         uint256[] memory _amounts
     ) internal view returns (uint256[] memory values) {
-        if (_assets.length != _amounts.length) revert IncorrectDataLength();
+        if (_assets.length != _amounts.length) revert DifferentArrayLength();
 
         values = new uint256[](_assets.length);
 
@@ -168,7 +170,9 @@ library Solvency {
         view
         returns (uint256[] memory collateralAmounts)
     {
-        if (_params.assetStates.length != _params.assetStates.length) revert IncorrectDataLength();
+        if (_params.assets.length != _params.assetStates.length) {
+            revert DifferentArrayLength();
+        }
 
         collateralAmounts = new uint256[](_params.assets.length);
 
@@ -199,7 +203,9 @@ library Solvency {
         view
         returns (uint256[] memory totalBorrowAmounts)
     {
-        if (_params.assets.length != _params.assetStates.length) revert IncorrectDataLength();
+        if (_params.assets.length != _params.assetStates.length) {
+            revert DifferentArrayLength();
+        }
 
         totalBorrowAmounts = new uint256[](_params.assets.length);
 
@@ -252,14 +258,14 @@ library Solvency {
         if (balance == 0) return 0;
 
         uint256 totalBorrowAmountCached = totalBorrowAmountWithInterest(_assetStates.totalBorrowAmount, _rcomp);
-        return balance.toAmount(totalBorrowAmountCached, _assetStates.debtToken.totalSupply());
+        return balance.toAmountRoundUp(totalBorrowAmountCached, _assetStates.debtToken.totalSupply());
     }
 
     /// @notice Get compounded interest rate from the model
     /// @param _silo Silo address
     /// @param _siloRepository SiloRepository address
     /// @param _asset address of asset for which to read interest rate
-    /// @param _timestamp latest timestamp used to determine amount of time from last rate update
+    /// @param _timestamp used to determine amount of time from last rate update
     /// @return rcomp compounded interest rate for an asset
     function getRcomp(ISilo _silo, ISiloRepository _siloRepository, address _asset, uint256 _timestamp)
         internal
@@ -270,10 +276,10 @@ library Solvency {
         rcomp = model.getCompoundInterestRate(address(_silo), _asset, _timestamp);
     }
 
-    /// @notice Returns total deposits with interest dynamically calculated at current block timestamp
+    /// @notice Returns total deposits with interest dynamically calculated with the provided rComp
     /// @param _assetTotalDeposits total deposits for asset
     /// @param _protocolShareFee `siloRepository.protocolShareFee()`
-    /// @param _rcomp compounded interest rate from last update until now
+    /// @param _rcomp compounded interest rate
     /// @return _totalDepositsWithInterests total deposits amount with interest
     function totalDepositsWithInterest(uint256 _assetTotalDeposits, uint256 _protocolShareFee, uint256 _rcomp)
         internal
@@ -282,13 +288,13 @@ library Solvency {
     {
         uint256 depositorsShare = _PRECISION_DECIMALS - _protocolShareFee;
 
-        return _assetTotalDeposits + _assetTotalDeposits * _rcomp * depositorsShare /
-            _PRECISION_DECIMALS / _PRECISION_DECIMALS;
+        return _assetTotalDeposits + _assetTotalDeposits * _rcomp / _PRECISION_DECIMALS * depositorsShare /
+            _PRECISION_DECIMALS;
     }
 
-    /// @notice Returns total borrow amount with interest dynamically calculated at current block timestamp
-    /// @param _totalBorrowAmount total borrow amoutn
-    /// @param _rcomp compounded interest rate from last update until now
+    /// @notice Returns total borrow amount with interest dynamically calculated with the provided rComp
+    /// @param _totalBorrowAmount total borrow amount
+    /// @param _rcomp compounded interest rate
     /// @return totalBorrowAmountWithInterests total borrow amount with interest
     function totalBorrowAmountWithInterest(uint256 _totalBorrowAmount, uint256 _rcomp)
         internal
@@ -303,31 +309,32 @@ library Solvency {
     /// @param _amount amount on which we will apply fee
     /// @param _liquidationFee liquidation fee in Solvency._PRECISION_DECIMALS
     /// @return liquidationFeeAmount calculated interest
-    /// @return newProtocolEarnedFees `_currentInterest` + calculated fees
+    /// @return newProtocolEarnedFees the new total amount of protocol fees
     function calculateLiquidationFee(uint256 _protocolEarnedFees, uint256 _amount, uint256 _liquidationFee)
         internal
         pure
         returns (uint256 liquidationFeeAmount, uint256 newProtocolEarnedFees)
     {
         unchecked {
-            // if we overflow on multiplication it should not revert tx, we will get lower fees
+            // If we overflow on multiplication it should not revert tx, we will get lower fees
             liquidationFeeAmount = _amount * _liquidationFee / Solvency._PRECISION_DECIMALS;
 
             if (_protocolEarnedFees > type(uint256).max - liquidationFeeAmount) {
                 newProtocolEarnedFees = type(uint256).max;
+                liquidationFeeAmount = type(uint256).max - _protocolEarnedFees;
             } else {
                 newProtocolEarnedFees = _protocolEarnedFees + liquidationFeeAmount;
             }
         }
     }
 
-    /// @notice Calculates theoretical value (in ETH) that user could borrow based given collateral value
+    /// @notice Calculates theoretical value (in quote token) that user could borrow based given collateral value
     /// @param _siloRepository SiloRepository address
     /// @param _silo Silo address
     /// @param _asset address of collateral token
-    /// @param _type type of LTV limit to use for calcualtions
-    /// @param _collateralValue value of collateral deposit (in ETH)
-    /// @return availableToBorrow value (in ETH) that user can borrow against collateral value
+    /// @param _type type of LTV limit to use for calculations
+    /// @param _collateralValue value of collateral deposit (in quote token)
+    /// @return availableToBorrow value (in quote token) that user can borrow against collateral value
     function _getAvailableToBorrowValue(
         ISiloRepository _siloRepository,
         address _silo,
@@ -342,7 +349,7 @@ library Solvency {
         } else if (_type == TypeofLTV.LiquidationThreshold) {
             assetLTV = _siloRepository.getLiquidationThreshold(_silo, _asset);
         } else {
-            revert("UnsupportedLTVType()");
+            revert UnsupportedLTVType();
         }
 
         // value that can be borrowed against the deposit
@@ -350,14 +357,14 @@ library Solvency {
         availableToBorrow = _collateralValue * assetLTV / _PRECISION_DECIMALS;
     }
 
-    /// @notice Calculates theoretical value (in ETH) that user can borrow based on deposited collateral
+    /// @notice Calculates theoretical value (in quote token) that user can borrow based on deposited collateral
     /// @param _siloRepository SiloRepository address
     /// @param _silo Silo address
     /// @param _assets array with assets
     /// @param _ltvType type of LTV limit to use for calculations
     /// acceptable values are only TypeofLTV.MaximumLTV or TypeofLTV.LiquidationThreshold
-    /// @param _collateralValues value (worth in ETH) of each deposit (in ETH) made by user
-    /// @return totalAvailableToBorrowValue value (in ETH) that user can borrow against collaterals
+    /// @param _collateralValues value (worth in quote token) of each deposit made by user
+    /// @return totalAvailableToBorrowValue value (in quote token) that user can borrow against collaterals
     function _getTotalAvailableToBorrowValue(
         ISiloRepository _siloRepository,
         address _silo,
@@ -365,7 +372,7 @@ library Solvency {
         TypeofLTV _ltvType,
         uint256[] memory _collateralValues
     ) private view returns (uint256 totalAvailableToBorrowValue) {
-        if (_assets.length != _collateralValues.length) revert IncorrectDataLength();
+        if (_assets.length != _collateralValues.length) revert DifferentArrayLength();
 
         for (uint256 i = 0; i < _assets.length; i++) {
             totalAvailableToBorrowValue += _getAvailableToBorrowValue(

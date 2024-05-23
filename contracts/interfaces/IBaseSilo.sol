@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: BUSL-1.1
-pragma solidity 0.8.7;
+pragma solidity 0.8.13;
 
 import "./IShareToken.sol";
 import "./IFlashLiquidationReceiver.sol";
@@ -48,6 +48,22 @@ interface IBaseSilo {
         uint64 interestRateTimestamp;
     }
 
+    /// @dev Shares names and symbols that are generated while asset initialization
+    struct AssetSharesMetadata {
+        /// @dev Name for the collateral shares token
+        string collateralName;
+        /// @dev Symbol for the collateral shares token
+        string collateralSymbol;
+        /// @dev Name for the collateral only (protected collateral) shares token
+        string protectedName;
+        /// @dev Symbol for the collateral only (protected collateral) shares token
+        string protectedSymbol;
+        /// @dev Name for the debt shares token
+        string debtName;
+        /// @dev Symbol for the debt shares token
+        string debtSymbol;
+    }
+
     /// @notice Emitted when deposit is made
     /// @param asset asset address that was deposited
     /// @param depositor wallet address that deposited asset
@@ -88,6 +104,14 @@ interface IBaseSilo {
     /// ownership of underlying deposit.
     /// @param seizedCollateral amount of underlying token that was seized by liquidator
     event Liquidate(address indexed asset, address indexed user, uint256 shareAmountRepaid, uint256 seizedCollateral);
+
+    /// @notice Emitted when the status for an asset is updated
+    /// @param asset asset address that was updated
+    /// @param status new asset status
+    event AssetStatusUpdate(address indexed asset, AssetStatus indexed status);
+
+    /// @return version of the silo contract
+    function VERSION() external returns (uint128); // solhint-disable-line func-name-mixedcase
 
     /// @notice Synchronize current bridge assets with Silo
     /// @dev This function needs to be called on Silo deployment to setup all assets for Silo. It needs to be
@@ -140,4 +164,9 @@ interface IBaseSilo {
     /// @param _borrower borrower address
     /// @return true if asset can be borrowed by borrower
     function borrowPossible(address _asset, address _borrower) external view returns (bool);
+
+    /// @dev Amount of token that is available for borrowing
+    /// @param _asset asset to get liquidity for
+    /// @return Silo liquidity
+    function liquidity(address _asset) external view returns (uint256);
 }

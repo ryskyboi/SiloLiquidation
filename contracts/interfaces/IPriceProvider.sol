@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: BUSL-1.1
-pragma solidity >=0.6.0 <0.9.0;
+pragma solidity >=0.7.6 <0.9.0;
 
 /// @title Common interface for Silo Price Providers
 interface IPriceProvider {
@@ -12,7 +12,7 @@ interface IPriceProvider {
     function getPrice(address _asset) external view returns (uint256 price);
 
     /// @dev Informs if PriceProvider is setup for asset. It does not means PriceProvider can provide price right away.
-    /// Some providers implementations need time to "build" buffor for TWAP price,
+    /// Some providers implementations need time to "build" buffer for TWAP price,
     /// so price may not be available yet but this method will return true.
     /// @param _asset asset in question
     /// @return TRUE if asset has been setup, otherwise false
@@ -26,5 +26,5 @@ interface IPriceProvider {
     /// @dev this can save us from simple human errors, in case we use invalid address
     /// but this should NOT be treated as security check
     /// @return always true
-    function priceProviderPing() external pure returns (bool);
+    function priceProviderPing() external pure returns (bytes4);
 }

@@ -5,38 +5,19 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"strings"
 
 	"example.com/m/bindings/SiloRepository"
+	"example.com/m/src/check"
 	"example.com/m/src/node"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/ethclient"
 )
-
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
-
-func SiloAddress() (common.Address, error) {
-	address, err := os.ReadFile("bindings/SiloRepository/address.txt")
-
-	if err != nil {
-		return common.Address{}, err
-	}
-
-	return common.HexToAddress(strings.TrimSpace(string(address))), nil
-
-}
 
 func getHistoricalSilos(silo_repo *SiloRepository.SiloRepository, ctx context.Context, bufferWriter *bufio.Writer) {
 	filterOpts := &bind.FilterOpts{Context: ctx, Start: 0, End: nil}
 
 	itr, err := silo_repo.FilterNewSiloNoParams(filterOpts)
 
-	check(err)
+	check.Check(err)
 
 	for itr.Next() {
 		event := itr.Event
@@ -48,21 +29,10 @@ func getHistoricalSilos(silo_repo *SiloRepository.SiloRepository, ctx context.Co
 	bufferWriter.Flush()
 }
 
-func geSiloRepo(node_address string) *SiloRepository.SiloRepository {
-	cl, err := ethclient.Dial(node_address)
-	check(err)
-	addr, err := SiloAddress()
-	check(err)
-	silo, err := SiloRepository.NewSiloRepository(addr, cl)
-	check(err)
-	return silo
-}
-
-func siloBufferWriter() *bufio.Writer {
+func siloBufferWriter() (*bufio.Writer, *os.File) {
 	file, err := os.OpenFile("silos.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	check(err)
-	defer file.Close()
-	return bufio.NewWriter(file)
+	check.Check(err)
+	return bufio.NewWriter(file), file
 }
 
 func watchSiloRepo(silo_repo *SiloRepository.SiloRepository, ctx context.Context) chan *SiloRepository.SiloRepositoryNewSilo {
@@ -72,7 +42,7 @@ func watchSiloRepo(silo_repo *SiloRepository.SiloRepository, ctx context.Context
 
 	go func() {
 		sub, err := silo_repo.WatchNewSiloNoParams(watchOpts, channel)
-		check(err)
+		check.Check(err)
 		defer sub.Unsubscribe()
 	}()
 	return channel
@@ -81,9 +51,10 @@ func watchSiloRepo(silo_repo *SiloRepository.SiloRepository, ctx context.Context
 func GetSilos() {
 	ctx := context.Background()
 	node_address := node.Arbitrum.GetInfura(false)
-	silo_buffer := siloBufferWriter()
+	silo_buffer, file := siloBufferWriter()
+	defer file.Close()
 
-	var silo_repo *SiloRepository.SiloRepository = geSiloRepo(node_address)
+	var silo_repo *SiloRepository.SiloRepository = SiloRepository.QuickSiloRepository(node_address)
 
 	getHistoricalSilos(silo_repo, ctx, silo_buffer)
 
@@ -93,7 +64,7 @@ func GetSilos() {
 		select {
 		case event := <-channel:
 			_, err := silo_buffer.WriteString(event.Silo.Hex())
-			check(err)
+			check.Check(err)
 
 		case <-ctx.Done():
 			fmt.Println("Context done")

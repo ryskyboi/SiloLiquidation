@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: BUSL-1.1
-pragma solidity 0.8.7;
+pragma solidity 0.8.13;
 
 /// @title Common interface for Silo Incentive Contract
 interface INotificationReceiver {
@@ -12,5 +12,5 @@ interface INotificationReceiver {
 
     /// @dev Sanity check function
     /// @return always true
-    function notificationReceiverPing() external pure returns (bool);
+    function notificationReceiverPing() external pure returns (bytes4);
 }

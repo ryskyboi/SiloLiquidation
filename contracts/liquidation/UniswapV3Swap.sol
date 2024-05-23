@@ -1,5 +1,5 @@
-// SPDX-License-Identifier: BUSL-1.1
-pragma solidity 0.8.7;
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.13;
 pragma abicoder v2;
 
 import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
@@ -15,8 +15,11 @@ contract UniswapV3Swap is ISwapper {
 
     ISwapRouter public immutable router;
 
+    error RouterIsZero();
+    error PoolNotSet();
+
     constructor (address _router) {
-        require(_router != address(0), "invalid router");
+        if (_router == address(0)) revert RouterIsZero();
 
         router = ISwapRouter(_router);
     }
@@ -55,7 +58,7 @@ contract UniswapV3Swap is ISwapper {
 
         // solhint-disable-next-line avoid-low-level-calls
         (bool success, bytes memory data) = _priceProvider.staticcall(callData);
-        require(success, "pool for asset not set");
+        if (!success) revert PoolNotSet();
 
         IUniswapV3Pool pool = IUniswapV3Pool(abi.decode(data, (address)));
         fee = pool.fee();

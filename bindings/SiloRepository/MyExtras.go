@@ -1,9 +1,19 @@
 package SiloRepository
 
 import (
+	"example.com/m/src/bindingHelpers"
+	"example.com/m/src/check"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/event"
 )
+
+func QuickSiloRepository(node_address string) *SiloRepository {
+	cl := bindingHelpers.EthDialed(node_address)
+	addr := bindingHelpers.Address("SiloRepository")
+	SiloRepository, err := NewSiloRepository(addr, cl)
+	check.Check(err)
+	return SiloRepository
+}
 
 // I have created this
 func (_SiloRepository *SiloRepositoryFilterer) FilterNewSiloNoParams(opts *bind.FilterOpts) (*SiloRepositoryNewSiloIterator, error) {

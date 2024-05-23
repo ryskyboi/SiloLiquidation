@@ -1,21 +1,21 @@
 // SPDX-License-Identifier: BUSL-1.1
-pragma solidity >=0.6.0 <0.9.0;
+pragma solidity >=0.7.6 <0.9.0;
 
 import "./IPriceProvider.sol";
 
 interface IPriceProvidersRepository {
     /// @notice Emitted when price provider is added
     /// @param newPriceProvider new price provider address
-    event NewPriceProvider(IPriceProvider newPriceProvider);
+    event NewPriceProvider(IPriceProvider indexed newPriceProvider);
 
     /// @notice Emitted when price provider is removed
     /// @param priceProvider removed price provider address
-    event PriceProviderRemoved(IPriceProvider priceProvider);
+    event PriceProviderRemoved(IPriceProvider indexed priceProvider);
 
     /// @notice Emitted when asset is assigned to price provider
     /// @param asset assigned asset   address
     /// @param priceProvider price provider address
-    event PriceProviderForAsset(address indexed asset, IPriceProvider priceProvider);
+    event PriceProviderForAsset(address indexed asset, IPriceProvider indexed priceProvider);
 
     /// @notice Register new price provider
     /// @param _priceProvider address of price provider
@@ -49,7 +49,7 @@ interface IPriceProvidersRepository {
     /// @return manager role address
     function manager() external view returns (address);
 
-    /// @notice Check if prices are available for an asset
+    /// @notice Checks if providers are available for an asset
     /// @param _asset asset address to check
     /// @return returns TRUE if price feed is ready, otherwise false
     function providersReadyForAsset(address _asset) external view returns (bool);
@@ -59,15 +59,15 @@ interface IPriceProvidersRepository {
     /// @return true if address is a registered price provider, otherwise false
     function isPriceProvider(IPriceProvider _provider) external view returns (bool);
 
-    /// @notice Gets number of pice providers registerd
-    /// @return number of pice providers registerd
+    /// @notice Gets number of price providers registered
+    /// @return number of price providers registered
     function providersCount() external view returns (uint256);
 
     /// @notice Gets an array of price providers
     /// @return array of price providers
     function providerList() external view returns (address[] memory);
 
-    /// @notice Sanity check funciton
+    /// @notice Sanity check function
     /// @return returns always TRUE
-    function priceProvidersRepositoryPing() external pure returns (bool);
+    function priceProvidersRepositoryPing() external pure returns (bytes4);
 }
