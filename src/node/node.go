@@ -37,3 +37,5 @@ func (c *Chain) GetInfura(use_https bool) string {
 }
 
 var Arbitrum = Chain{name: "arbitrum", chainId: 42161, isMainnet: true}
+
+var Arbitrum_rpc = "https://arb1.arbitrum.io/rpc"
