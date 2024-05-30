@@ -1,0 +1,572 @@
+[
+  {
+    "Amount": 84524436,
+    "Block": 61371851,
+    "User": "0xa91c173412015bb9742f8c84196558765231cbe8"
+  },
+  {
+    "Amount": 200000000000000000,
+    "Block": 61703585,
+    "User": "0x7a0c7c84ec066b14f83d127bff2b7f46094b6226"
+  },
+  {
+    "Amount": 13025038785399476456,
+    "Block": 65517550,
+    "User": "0x80071b39aa896aa12240c5194e42661d671bdfb2"
+  },
+  {
+    "Amount": 2030000,
+    "Block": 65725467,
+    "User": "0xf18eb7de4a8f3e9d8d0e516bed6a169bc330b7a4"
+  },
+  {
+    "Amount": 4000000000,
+    "Block": 67023504,
+    "User": "0x8ab8226e45224cd2330934d0cc5cc25dcab0b7ba"
+  },
+  {
+    "Amount": 31000000,
+    "Block": 67930458,
+    "User": "0xfdf95bc356cf9aa3859da4812b24e65e48eee98b"
+  },
+  {
+    "Amount": 3979303336614035456,
+    "Block": 70781351,
+    "User": "0xfbaa6104ce2321ea98f0ad6c5ab3d49871bc0f4f"
+  },
+  {
+    "Amount": 250000000,
+    "Block": 80449920,
+    "User": "0x6eec4c0fe6c4cc901138d480e73426a891347736"
+  },
+  {
+    "Amount": 300000000,
+    "Block": 86491782,
+    "User": "0x68a8fb23e6fe18d29da22929c75be33e43bd81b3"
+  },
+  {
+    "Amount": 2505997501449624323,
+    "Block": 103253553,
+    "User": "0x7030d5ae6c8bebd850e2efb8382ad7dde4b88174"
+  },
+  {
+    "Amount": 2434001827354180238,
+    "Block": 103282439,
+    "User": "0x7030d5ae6c8bebd850e2efb8382ad7dde4b88174"
+  },
+  {
+    "Amount": 2000000000000000000,
+    "Block": 107823534,
+    "User": "0xdedcf5806c4968c6397eee97e68047bda339d0c1"
+  },
+  {
+    "Amount": 1580000000,
+    "Block": 108713525,
+    "User": "0xad3d0a6868124f3f28fc746132bc32608f0e6a60"
+  },
+  {
+    "Amount": 40000000,
+    "Block": 114105446,
+    "User": "0x1122507b2a7a3d4c54396c12fa096f1a33341fa5"
+  },
+  {
+    "Amount": 20000000,
+    "Block": 114107828,
+    "User": "0x1122507b2a7a3d4c54396c12fa096f1a33341fa5"
+  },
+  {
+    "Amount": 500000000000000000,
+    "Block": 114339365,
+    "User": "0x85d33380514aba3ae6cf1c58ad9717a2b1cf0272"
+  },
+  {
+    "Amount": 39941853,
+    "Block": 114823816,
+    "User": "0x1122507b2a7a3d4c54396c12fa096f1a33341fa5"
+  },
+  {
+    "Amount": 50000000,
+    "Block": 121740354,
+    "User": "0x68a8fb23e6fe18d29da22929c75be33e43bd81b3"
+  },
+  {
+    "Amount": 500000000,
+    "Block": 128708694,
+    "User": "0x68a8fb23e6fe18d29da22929c75be33e43bd81b3"
+  },
+  {
+    "Amount": 150000000,
+    "Block": 142304438,
+    "User": "0xa2b287e3eca08c063282768e0c98bd9ecb7f736e"
+  },
+  {
+    "Amount": 280000000,
+    "Block": 143143086,
+    "User": "0x467c03cef39296da041fbcd03d8f67932c1fddf2"
+  },
+  {
+    "Amount": 49800000,
+    "Block": 143148981,
+    "User": "0x467c03cef39296da041fbcd03d8f67932c1fddf2"
+  },
+  {
+    "Amount": 30000000,
+    "Block": 147713566,
+    "User": "0x4ce268f49ef0726d602a8b0f22fcc543aa23bb51"
+  },
+  {
+    "Amount": 198664000,
+    "Block": 148166985,
+    "User": "0x505a46c88ae9fadc438934bb8cc6adc026d4b1af"
+  },
+  {
+    "Amount": 15000000,
+    "Block": 153633701,
+    "User": "0x01863b065d8d8ed5397b266df2d121384e0b7d40"
+  },
+  {
+    "Amount": 10005642057967037,
+    "Block": 155886789,
+    "User": "0xa101f25569b42beedfd8c42964314f35e59947e6"
+  },
+  {
+    "Amount": 3750000,
+    "Block": 157045304,
+    "User": "0x01863b065d8d8ed5397b266df2d121384e0b7d40"
+  },
+  {
+    "Amount": 253821293,
+    "Block": 158695661,
+    "User": "0x0d421b61b42433876cde49d84f46757d4a633199"
+  },
+  {
+    "Amount": 250000000,
+    "Block": 158701617,
+    "User": "0x0d421b61b42433876cde49d84f46757d4a633199"
+  },
+  {
+    "Amount": 255939726,
+    "Block": 158763820,
+    "User": "0x0d421b61b42433876cde49d84f46757d4a633199"
+  },
+  {
+    "Amount": 100000000,
+    "Block": 162377101,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 50000000,
+    "Block": 162780096,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 100000000,
+    "Block": 163781670,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 100000000,
+    "Block": 163922771,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 70000000,
+    "Block": 164283063,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 70000000,
+    "Block": 164359408,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 80000000,
+    "Block": 164757056,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 70000000,
+    "Block": 166771751,
+    "User": "0xaad54a023bb0ef5ee6dbb6457f07062a7c88046b"
+  },
+  {
+    "Amount": 50000000,
+    "Block": 166939064,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 50000000,
+    "Block": 167374062,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 80000000,
+    "Block": 168003472,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 30000000,
+    "Block": 168312411,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 30000000,
+    "Block": 168378003,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 100000000,
+    "Block": 170106945,
+    "User": "0xb4c8cddc137f46348231c937c4d36b643320af22"
+  },
+  {
+    "Amount": 150000000,
+    "Block": 171126205,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 50000000,
+    "Block": 171141875,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 40000000,
+    "Block": 171144939,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 60000000,
+    "Block": 171144989,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 50000000,
+    "Block": 171178383,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 250000000,
+    "Block": 171681780,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 130000000,
+    "Block": 171682020,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 100000000,
+    "Block": 171745276,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 100000000,
+    "Block": 175038996,
+    "User": "0xd1e1d5c9ef5556c2ac23c61232348cf8d7d759b8"
+  },
+  {
+    "Amount": 7000000,
+    "Block": 175044194,
+    "User": "0xd1e1d5c9ef5556c2ac23c61232348cf8d7d759b8"
+  },
+  {
+    "Amount": 120000000,
+    "Block": 180477085,
+    "User": "0xb86de2fd8b73b4ededc6d61f85afc66a0df512f5"
+  },
+  {
+    "Amount": 490000000,
+    "Block": 180697611,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 40000000,
+    "Block": 180699482,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 75000000,
+    "Block": 180843424,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 74000000,
+    "Block": 180846273,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 200000000,
+    "Block": 181135916,
+    "User": "0x18e3e9db2a9d3822cf79a6aeb6ffc87653710be3"
+  },
+  {
+    "Amount": 10031226649195085,
+    "Block": 181637774,
+    "User": "0xd6013b0309a058adbd0a8c727fbaba79f60bc238"
+  },
+  {
+    "Amount": 160000000,
+    "Block": 182301380,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 170000000,
+    "Block": 182332261,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 140000000,
+    "Block": 182332995,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 80000000,
+    "Block": 182337302,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 100000000,
+    "Block": 182628531,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 275877110,
+    "Block": 183851098,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 432100000,
+    "Block": 183882065,
+    "User": "0xb4c8cddc137f46348231c937c4d36b643320af22"
+  },
+  {
+    "Amount": 80000000,
+    "Block": 184367907,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 170000000,
+    "Block": 185819120,
+    "User": "0xb86de2fd8b73b4ededc6d61f85afc66a0df512f5"
+  },
+  {
+    "Amount": 100000000,
+    "Block": 186167176,
+    "User": "0x82b1a5ed0b2cb046362a772cba9423de7c300cce"
+  },
+  {
+    "Amount": 99000000,
+    "Block": 186348297,
+    "User": "0xb4c8cddc137f46348231c937c4d36b643320af22"
+  },
+  {
+    "Amount": 50000000,
+    "Block": 186813498,
+    "User": "0xb86de2fd8b73b4ededc6d61f85afc66a0df512f5"
+  },
+  {
+    "Amount": 154291180,
+    "Block": 186999893,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 450000000,
+    "Block": 187494118,
+    "User": "0x18e3e9db2a9d3822cf79a6aeb6ffc87653710be3"
+  },
+  {
+    "Amount": 130000000,
+    "Block": 187523375,
+    "User": "0x90485636579f7fc4162aa233b80deb4fa248fa02"
+  },
+  {
+    "Amount": 55000000000000000,
+    "Block": 189003018,
+    "User": "0x0621de43799a6229fd0e6d2cb5236e6ff587f34c"
+  },
+  {
+    "Amount": 100000000,
+    "Block": 189024151,
+    "User": "0x90485636579f7fc4162aa233b80deb4fa248fa02"
+  },
+  {
+    "Amount": 200000000,
+    "Block": 190379322,
+    "User": "0x82b1a5ed0b2cb046362a772cba9423de7c300cce"
+  },
+  {
+    "Amount": 25000000000000000,
+    "Block": 191189849,
+    "User": "0xa101f25569b42beedfd8c42964314f35e59947e6"
+  },
+  {
+    "Amount": 14683539763067797,
+    "Block": 193717887,
+    "User": "0xe5988e0a077491660baddb23d2444c5519195596"
+  },
+  {
+    "Amount": 200000000,
+    "Block": 194930585,
+    "User": "0xb86de2fd8b73b4ededc6d61f85afc66a0df512f5"
+  },
+  {
+    "Amount": 20000000000000000,
+    "Block": 194946165,
+    "User": "0xd1e1d5c9ef5556c2ac23c61232348cf8d7d759b8"
+  },
+  {
+    "Amount": 10000422452105372,
+    "Block": 195649927,
+    "User": "0xd1e1d5c9ef5556c2ac23c61232348cf8d7d759b8"
+  },
+  {
+    "Amount": 461446768,
+    "Block": 195920052,
+    "User": "0x84f4b2347a06984dedf8cf3c01712de52e2e9ee8"
+  },
+  {
+    "Amount": 220000000,
+    "Block": 196251571,
+    "User": "0xd1e1d5c9ef5556c2ac23c61232348cf8d7d759b8"
+  },
+  {
+    "Amount": 201006216,
+    "Block": 196674609,
+    "User": "0x84f4b2347a06984dedf8cf3c01712de52e2e9ee8"
+  },
+  {
+    "Amount": 700000000,
+    "Block": 198555511,
+    "User": "0x394bbb5f3020bab3f786c51821508f683a20f72a"
+  },
+  {
+    "Amount": 30245630809387680,
+    "Block": 199044873,
+    "User": "0x394bbb5f3020bab3f786c51821508f683a20f72a"
+  },
+  {
+    "Amount": 1937910009842106368,
+    "Block": 199056824,
+    "User": "0x71aa2992a5b59e8b53e0f6c5d1d51bf3633306d4"
+  },
+  {
+    "Amount": 580335619,
+    "Block": 199330858,
+    "User": "0x84f4b2347a06984dedf8cf3c01712de52e2e9ee8"
+  },
+  {
+    "Amount": 20000000000000000,
+    "Block": 199389980,
+    "User": "0xc4e5a3642fd29372756784f9f7c8fa4a46ea3f8d"
+  },
+  {
+    "Amount": 100000000,
+    "Block": 199769198,
+    "User": "0xb86de2fd8b73b4ededc6d61f85afc66a0df512f5"
+  },
+  {
+    "Amount": 50000000,
+    "Block": 199770437,
+    "User": "0xb86de2fd8b73b4ededc6d61f85afc66a0df512f5"
+  },
+  {
+    "Amount": 150000000,
+    "Block": 200017906,
+    "User": "0x0621de43799a6229fd0e6d2cb5236e6ff587f34c"
+  },
+  {
+    "Amount": 950000000,
+    "Block": 200347211,
+    "User": "0x199ef137054d30656c3237ba831fb8da7b91ebdd"
+  },
+  {
+    "Amount": 50000000,
+    "Block": 200741105,
+    "User": "0xb86de2fd8b73b4ededc6d61f85afc66a0df512f5"
+  },
+  {
+    "Amount": 31000000000000000,
+    "Block": 200951851,
+    "User": "0x394bbb5f3020bab3f786c51821508f683a20f72a"
+  },
+  {
+    "Amount": 80000000,
+    "Block": 201425613,
+    "User": "0xd1e1d5c9ef5556c2ac23c61232348cf8d7d759b8"
+  },
+  {
+    "Amount": 78400000,
+    "Block": 204113783,
+    "User": "0x631d088737f61e0401b39841c83655033ddbc5d6"
+  },
+  {
+    "Amount": 150000000,
+    "Block": 208939325,
+    "User": "0x90485636579f7fc4162aa233b80deb4fa248fa02"
+  },
+  {
+    "Amount": 15836683594399733358,
+    "Block": 211011745,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 12643499136493488865,
+    "Block": 211012105,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 4659767778871345152,
+    "Block": 211156791,
+    "User": "0x2f062d9aa98209d2c79a744b0d4ef203d363b7d6"
+  },
+  {
+    "Amount": 14553255926290448384,
+    "Block": 211392084,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 14659767778871345152,
+    "Block": 211516070,
+    "User": "0x7693517008eee395e93dfc8e784d48e667222fa6"
+  },
+  {
+    "Amount": 21000000,
+    "Block": 213347128,
+    "User": "0x90485636579f7fc4162aa233b80deb4fa248fa02"
+  },
+  {
+    "Amount": 68900000,
+    "Block": 213376225,
+    "User": "0xb86de2fd8b73b4ededc6d61f85afc66a0df512f5"
+  },
+  {
+    "Amount": 1553255926290448384,
+    "Block": 213490289,
+    "User": "0x2f062d9aa98209d2c79a744b0d4ef203d363b7d6"
+  },
+  {
+    "Amount": 180000000,
+    "Block": 213666204,
+    "User": "0xb86de2fd8b73b4ededc6d61f85afc66a0df512f5"
+  },
+  {
+    "Amount": 300000000,
+    "Block": 214079958,
+    "User": "0x199ef137054d30656c3237ba831fb8da7b91ebdd"
+  },
+  {
+    "Amount": 150000000000000000,
+    "Block": 215265867,
+    "User": "0x394bbb5f3020bab3f786c51821508f683a20f72a"
+  },
+  {
+    "Amount": 65000000,
+    "Block": 215281812,
+    "User": "0x90485636579f7fc4162aa233b80deb4fa248fa02"
+  },
+  {
+    "Amount": 100000000000000000,
+    "Block": 215365186,
+    "User": "0x394bbb5f3020bab3f786c51821508f683a20f72a"
+  }
+]

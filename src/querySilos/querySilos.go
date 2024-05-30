@@ -1,7 +1,8 @@
-package main
+package querySilos
 
 import (
 	"bufio"
+	"context"
 	"encoding/json"
 	"fmt"
 	"math/big"
@@ -13,21 +14,21 @@ import (
 	"example.com/m/src/bindingHelpers"
 	"example.com/m/src/check"
 	"example.com/m/src/node"
-	"example.com/m/src/siloTypes"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 func CreateSiloParamsJson() (*os.File, error) {
 	name := "silo.json"
-	jsonFile, err := os.OpenFile(name, os.O_APPEND|os.O_CREATE, 0755)
+	jsonFile, err := os.OpenFile(name, os.O_RDWR|os.O_CREATE, 0755) //os.O_APPEND|os.O_CREATE,
 	if err != nil {
 		return nil, err
 	}
 	return jsonFile, nil
 }
 
-func writeSilosToFile(s siloTypes.Silos, jsonFile *os.File) {
+func writeToJsonFile(s any, jsonFile *os.File) {
 	// Marshal the silos map into a byte slice
 	jsonData, err := json.MarshalIndent(s, "", "  ")
 	check.Check(err)
@@ -37,11 +38,14 @@ func writeSilosToFile(s siloTypes.Silos, jsonFile *os.File) {
 	check.Check(err)
 }
 
-func getSiloParams(address common.Address, backend bind.ContractBackend, opts *bind.CallOpts, nodeAddress string) (siloTypes.SiloParams, error) {
-	sp := siloTypes.SiloParams{
-		Assets: []common.Address{},
-		Ltv:    make(siloTypes.SiloLtv),
-		Lt:     make(siloTypes.SiloLiquidationThreshold),
+func getSiloParams(address common.Address, backend bind.ContractBackend, opts *bind.CallOpts, nodeAddress string) (SiloParams, error) {
+	sp := SiloParams{
+		Assets:      []common.Address{},
+		Creator:     common.Address{},
+		CreationTX:  common.Hash{},
+		BlockNumber: uint64(0),
+		Ltv:         make(SiloLtv),
+		Lt:          make(SiloLiquidationThreshold),
 	}
 
 	silo, err := ISilo.NewSilo(address, backend)
@@ -87,7 +91,7 @@ func getAssetParams(opts *bind.CallOpts, address, asset common.Address, repo *Si
 
 func getKeys(jsonFile *os.File) []common.Address {
 	decoder := json.NewDecoder(jsonFile)
-	tempSilo := make(siloTypes.Silos)
+	tempSilo := make(Silos)
 	decoder.Decode(&tempSilo)
 	keys := make([]common.Address, 0, len(tempSilo))
 	for k := range tempSilo {
@@ -96,38 +100,72 @@ func getKeys(jsonFile *os.File) []common.Address {
 	return keys
 }
 
-func QuerySilos() {
+// Setup the backend and files
+func setup() (*ethclient.Client, *os.File, *os.File) {
 	nodeAddress := node.Arbitrum_rpc
 	backend := bindingHelpers.EthDialed(nodeAddress)
+
 	file, err := os.Open("silos.txt")
 	check.Check(err)
-	defer file.Close()
 
 	jsonFile, err := CreateSiloParamsJson()
 	check.Check(err)
-	defer jsonFile.Close()
-	keys := getKeys(jsonFile)
+
+	return backend, file, jsonFile
+}
+
+// Scan the file and add new silos
+func scanFileAndAddSilos(scanner *bufio.Scanner, keys []common.Address, backend *ethclient.Client, nodeAddress string) ([]common.Address, Silos) {
+	added := make([]common.Address, 0)
+	allSilos := make(Silos)
 
 	opts := &bind.CallOpts{}
-	allSilos := make(siloTypes.Silos)
 
-	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		address := common.HexToAddress(scanner.Text())
 		if slices.Contains(keys, address) {
 			continue
 		}
+		fmt.Printf("Adding silo: %v\n", address)
+		added = append(added, address)
 		siloParams, err := getSiloParams(address, backend, opts, nodeAddress)
 		check.Check(err)
 		allSilos[address] = siloParams
 	}
-	new_silos := len(allSilos)
-	if new_silos != 0 {
-		writeSilosToFile(allSilos, jsonFile)
-		fmt.Printf("Added %d new silos\n", new_silos)
+
+	return added, allSilos
+}
+
+// Update silos with contract creation block
+func updateSilosWithContractCreationBlock(added []common.Address, backend *ethclient.Client, allSilos Silos) {
+	otherContractParts := GetContractCreationBlock(added, context.Background(), *backend)
+	for _, contract := range otherContractParts {
+		silo, ok := allSilos[contract.ContractAddress]
+		if !ok {
+			continue
+		}
+		silo.Creator = contract.ContractCreator
+		silo.CreationTX = contract.TxHash
+		silo.BlockNumber = contract.BlockNumber
+		allSilos[contract.ContractAddress] = silo
 	}
 }
 
-func main() {
-	QuerySilos()
+func QuerySilos() {
+	backend, file, jsonFile := setup()
+	defer file.Close()
+	defer jsonFile.Close()
+
+	// Get existing keys
+	keys := getKeys(jsonFile)
+
+	scanner := bufio.NewScanner(file)
+	added, allSilos := scanFileAndAddSilos(scanner, keys, backend, node.Arbitrum_rpc)
+
+	updateSilosWithContractCreationBlock(added, backend, allSilos)
+
+	// Write silos to file if any exist
+	if len(allSilos) != 0 {
+		writeToJsonFile(allSilos, jsonFile)
+	}
 }
