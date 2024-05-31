@@ -21,21 +21,20 @@ type Silos map[common.Address]SiloParams
 
 type Transaction struct {
 	Amount uint64
+	Asset  common.Address
 	Block  uint64
 	User   common.Address
 }
 
-type DepositTransaction struct {
-	Transaction
+type Balance map[common.Address]uint64
+
+type Contents struct {
+	Address common.Address
+	Owe     Balance
+	Own     Balance
 }
 
-type BorrowTransaction struct {
-	Transaction
-}
-
-type RepayTransaction struct {
-	Transaction
-}
+type Account map[common.Address]Contents
 
 type Contract struct {
 	ContractAddress common.Address `json:"contractAddress"`

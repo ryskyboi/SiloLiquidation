@@ -21,7 +21,6 @@ func getHistoricalSilos(silo_repo *SiloRepository.SiloRepository, ctx context.Co
 
 	for itr.Next() {
 		event := itr.Event
-		// Print out all caller addresses
 		bufferWriter.WriteString(event.Silo.Hex())
 		bufferWriter.WriteString("\n")
 		fmt.Println(event.Silo.Hex())

@@ -6,5 +6,6 @@ import (
 
 func main() {
 	// previousLiquidations.PreviousLiquidations()
-	querySilos.SiloStateEvents()
+	// querySilos.SiloStateEvents()
+	querySilos.ProduceState()
 }

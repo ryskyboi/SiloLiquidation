@@ -1,31 +1,37 @@
 [
   {
     "Amount": 299000000000000000,
+    "Asset": "0x4945970efeec98d393b4b979b9be265a3ae28a8b",
     "Block": 54938139,
     "User": "0x791d1ec51d931186c1d4b80e753b7155dd98f741"
   },
   {
     "Amount": 5000000000000000,
+    "Asset": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
     "Block": 55186617,
     "User": "0xdedcf5806c4968c6397eee97e68047bda339d0c1"
   },
   {
     "Amount": 7300000000000000,
+    "Asset": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
     "Block": 55215731,
     "User": "0xdedcf5806c4968c6397eee97e68047bda339d0c1"
   },
   {
     "Amount": 6350000000000000,
+    "Asset": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
     "Block": 55217021,
     "User": "0xdedcf5806c4968c6397eee97e68047bda339d0c1"
   },
   {
     "Amount": 866999923176598311,
+    "Asset": "0x4945970efeec98d393b4b979b9be265a3ae28a8b",
     "Block": 55398886,
     "User": "0x7776421dd146dfd6ea947cbf29b69c519807d259"
   },
   {
     "Amount": 10000000000000000,
+    "Asset": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
     "Block": 55442188,
     "User": "0xdedcf5806c4968c6397eee97e68047bda339d0c1"
   }

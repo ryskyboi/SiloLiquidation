@@ -12,5 +12,4 @@ var TestnetMap = map[string][]string{
 }
 
 var Arbitrum = Chain{name: "arbitrum", chainId: 42161, isMainnet: true}
-
 var Arbitrum_rpc = "https://arb1.arbitrum.io/rpc"

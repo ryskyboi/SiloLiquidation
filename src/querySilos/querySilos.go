@@ -19,8 +19,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 )
 
-func CreateSiloParamsJson() (*os.File, error) {
-	name := "silo.json"
+func CreateJson(name string) (*os.File, error) {
 	jsonFile, err := os.OpenFile(name, os.O_RDWR|os.O_CREATE, 0755) //os.O_APPEND|os.O_CREATE,
 	if err != nil {
 		return nil, err
@@ -108,7 +107,7 @@ func setup() (*ethclient.Client, *os.File, *os.File) {
 	file, err := os.Open("silos.txt")
 	check.Check(err)
 
-	jsonFile, err := CreateSiloParamsJson()
+	jsonFile, err := CreateJson("silo.json")
 	check.Check(err)
 
 	return backend, file, jsonFile

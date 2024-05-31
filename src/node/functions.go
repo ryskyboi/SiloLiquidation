@@ -9,11 +9,15 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func (c *Chain) GetInfura(use_https bool) string {
-	var prefix, suffix string
+func (c *Chain) GetInfura(use_https bool, key_num int) string {
+	var prefix, suffix, infura_api_key string
 
 	godotenv.Load()
-	infura_api_key := os.Getenv("INFURA_API_KEY")
+	if key_num == 1 {
+		infura_api_key = os.Getenv("INFURA_API_KEY_1")
+	} else {
+		infura_api_key = os.Getenv("INFURA_API_KEY")
+	}
 
 	if use_https {
 		prefix = "https"
